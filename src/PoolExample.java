@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Lucky {
+public class PoolExample {
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -25,6 +25,10 @@ public class Lucky {
             Thread.sleep(10);
 
             System.out.println("creating #" + number);
+
+            while(executor.getActiveCount() == executor.getMaximumPoolSize())
+                Thread.sleep(10);
+
             executor.submit(() -> {
                 int working = inProgress.incrementAndGet();
                 System.out.println("start #" + number + ", in progress: " + working);
